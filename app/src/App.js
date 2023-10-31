@@ -148,11 +148,11 @@ function App() {
         
         </p>
         
-
+        <div style={{display:'none'}}>
         <label id="name"><h4 style={{ paddingLeft: "15px",paddingTop: "0px"}} align="left">Load Projection</h4> </label>
         <input  type="file" accept=".json" onChange={handleFileChange} id="name" name="name" style={{ position:"relative", top: "-15px", left: "-10px"}} align="left" />
         <br />
-        
+        </div>
    
         </div>
 
