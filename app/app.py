@@ -20,8 +20,8 @@ from rake_nltk import Metric, Rake
 import ssl
 import os
 import openai
-openai.organization = "org-B5R2RX56FUocWv2e067Vwaqh"
-openai.api_key = "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"
+openai.organization = ""
+openai.api_key = ""
 
 try:
      _create_unverified_https_context = ssl._create_unverified_context
