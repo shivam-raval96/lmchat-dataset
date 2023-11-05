@@ -22,9 +22,21 @@ Install dependencies
 
 - ``pip install -r requirements.txt``
 
+
 ## Running the app
 
 ### Development
+
+Prepare appropriate package.json
+
+- For local dev, 
+  - rename `package.json` to `package-original.json`
+  - rename `package-local.json` to `package.json`
+- For github pages, remember to do the reverse. 
+
+Build frontend
+
+- ``npm run build``
 
 Run app using vanilla python (not recommended)
 
