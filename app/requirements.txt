@@ -1,0 +1,13 @@
+flask
+python-dotenv
+gunicorn
+flask_cors
+flask_restful 
+pandas
+openai
+rake_nltk
+umap-learn
+hdbscan
+
+matplotlib
+sentence_transformers
