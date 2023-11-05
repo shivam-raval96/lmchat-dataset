@@ -1,39 +1,45 @@
 ## Setup
 
-**Create virtual environment**
+Create virtual environment
 
-(best to use VSCode built-in conda env creator, use python 3.8)
+- Easiest to use VSCode built-in conda env creator, choose python 3.8. Alternatively:
+- ``conda create --prefix ./.conda python=3.8``
 
-**Activate virtual environment**
+Activate virtual environment
 
-``conda activate <env>``
+- ``conda activate <env path>/.conda``
+- Remember to also "Select Interpreter" on VSCode
 
-**Install pytorch**
+Install PyTorch
 
-``conda install pytorch::pytorch torchvision torchaudio -c pytorch``
+- ``conda install pytorch::pytorch torchvision torchaudio -c pytorch``
 
-**Install dependencies**
+Go to app directory
 
-``pip install -r requirements.txt``
+- ``cd app``
+
+Install dependencies
+
+- ``pip install -r requirements.txt``
 
 ## Running the app
 
 ### Development
 
-**Run app using vanilla python (not recommended)**
+Run app using vanilla python (not recommended)
 
-``python app.py``
+- ``python app.py``
 
-**Run app using flask debug mode**
+Run app using flask debug mode
 
-``python -m flask --app app.py --debug run``
+- ``python -m flask --app app.py --debug run``
 
-**Run app using gunicorn with debug mode**
+Run app using gunicorn with debug mode (❌ not tested)
 
-``gunicorn app:app --log-level=debug (❌ not tested)``
+- ``gunicorn app:app --log-level=debug``
 
 ### Production(ish)
 
-**Run app using gunicorn with 4 workers**
+Run app using gunicorn with 4 workers (❌ not tested)
 
-``gunicorn app:app --workers=4 (❌  not tested)``
+- ``gunicorn app:app --workers=4``
