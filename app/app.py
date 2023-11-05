@@ -1,9 +1,11 @@
-from flask import Flask, send_from_directory, url_for
-from flask_cors import CORS #comment this on deployment
+from flask import Flask, request, jsonify, send_from_directory, url_for
+from flask_cors import CORS # comment this on deployment
 from flask_restful import reqparse
 import pandas as pd
 import io
 from umap import UMAP
+# import logging
+
 import hdbscan
 import numpy as np
 
@@ -12,13 +14,13 @@ import torch.nn as nn
 from torch.nn.functional import relu
 import torch.optim as optim
 
-import openai
 import json
 import random
 import re
 from rake_nltk import Metric, Rake
 import ssl
 import os
+
 import openai
 openai.organization = ""
 openai.api_key = ""
@@ -51,6 +53,7 @@ weight_decay = 0.001  # L2 regularization strength
 
 app = Flask(__name__, static_url_path='', static_folder='build')
 cors = CORS(app)
+# logging.basicConfig(filename='flask.log', level=logging.DEBUG)
 
 # Serve home route
 @app.route("/")
@@ -60,24 +63,25 @@ def home():
 @app.route("/modify-embeddings", methods=["POST"])
 def modify():
 
-    parser = reqparse.RequestParser()
-    parser.add_argument('data', type=str)
-    parser.add_argument('theme', type=str)
+    # parser = reqparse.RequestParser()
+    # parser.add_argument('data', type=str)
+    # parser.add_argument('theme', type=str)
 
-    args = parser.parse_args()
+    # args = parser.parse_args()
 
-    data = args['data']
-    theme = args['theme']
+    # data = args['data']
+    # theme = args['theme']
 
+    data = request.json['data']
+    theme = request.json['theme']
 
-    df = pd.read_csv('src/datasets/f_emb.csv')
-    '''new_sim = np.zeros((10,10))
-    prompt ="I am providing you with a two sentences. I want you to provide a similairty rating between 1 and 10 \
+    # df = pd.read_csv('src/datasets/f_emb.csv')
+    df = pd.read_csv('src/datasets/frankenstein.csv')
+    new_sim = np.zeros((10,10))
+    prompt ="I am providing you with two sentences. I want you to provide a similairty rating between 1 and 10 \
             that quantifies how much the similar or opposite the sentences are based on "+ theme+ " detected in the text. Only provide a score and nothing else. \
             Here are the two sentences: "
-    
-
-
+  
     n = 5
     ids = np.random.randint(0,len(df),n)
     scores = np.zeros((n,n))
@@ -87,7 +91,6 @@ def modify():
         
             result = get_score(df['text'][ids[i]], df['text'][ids[j]], prompt, theme)
         
-            
             scores[i,j] = result
 
     scores = np.tril(scores).T+np.tril(scores)
@@ -98,21 +101,23 @@ def modify():
     umap = UMAP(n_components=2, n_neighbors=10,min_dist=0)
     embedding = umap.fit_transform(transformed,)
     df_mod = pd.DataFrame(embedding)
-    df_mod['text'] = df['text']'''
+    df_mod['text'] = df['text']
 
     return df.to_json(orient="split")
+
+    # return jsonify(data, theme)     # 🧪 testing only
 
 
 def get_score(text1, text2, prompt, theme):
     
     response = openai.ChatCompletion.create(
         model="gpt-4",
+        # model="gpt-3.5-turbo",
         messages=[
             {"role": "system", "content": "You are an expert in comparing sentences based on "+ theme+"."},
             {"role": "user", "content": prompt +text1 +', '+text2},
         ]
     )
-    
     print(response["choices"][0]["message"]["content"])
     
     try:
@@ -121,6 +126,10 @@ def get_score(text1, text2, prompt, theme):
         result = []
     
     return result
+
+    # testing_response = np.random.randint(1,10)  # 🧪 testing only
+    # print(testing_response)                     # 🧪 testing only
+    # return np.random.randint(1,10)              # 🧪 testing only
 
 def learn_transformation(scores, df, ids):
     
@@ -144,9 +153,9 @@ def learn_transformation(scores, df, ids):
         if (epoch + 1) % 2000 == 0:
             print(f'Epoch [{epoch+1}/{num_epochs}], Loss: {loss.item():.4f}')
 
-        transformed = net(torch.tensor(df.iloc[:,:-1].to_numpy()).float()).detach().numpy()
-
-        return transformed
+    transformed = net(torch.tensor(df.iloc[:,:-1].to_numpy()).float()).detach().numpy()
+    
+    return transformed
 
 
 
