@@ -22,7 +22,7 @@
 
 **Run app using vanilla python (not recommended)**
 
-``python3 app.py``
+``python app.py``
 
 **Run app using flask debug mode**
 
