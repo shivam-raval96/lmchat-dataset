@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/lmchat-dataset/static/css/main.7a7adfcd.css",
-    "main.js": "/lmchat-dataset/static/js/main.c0e0654c.js",
+    "main.css": "/lmchat-dataset/static/css/main.3f9c202d.css",
+    "main.js": "/lmchat-dataset/static/js/main.709119cc.js",
     "static/js/787.c1112931.chunk.js": "/lmchat-dataset/static/js/787.c1112931.chunk.js",
     "index.html": "/lmchat-dataset/index.html",
-    "main.7a7adfcd.css.map": "/lmchat-dataset/static/css/main.7a7adfcd.css.map",
-    "main.c0e0654c.js.map": "/lmchat-dataset/static/js/main.c0e0654c.js.map",
+    "main.3f9c202d.css.map": "/lmchat-dataset/static/css/main.3f9c202d.css.map",
+    "main.709119cc.js.map": "/lmchat-dataset/static/js/main.709119cc.js.map",
     "787.c1112931.chunk.js.map": "/lmchat-dataset/static/js/787.c1112931.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.7a7adfcd.css",
-    "static/js/main.c0e0654c.js"
+    "static/css/main.3f9c202d.css",
+    "static/js/main.709119cc.js"
   ]
 }
